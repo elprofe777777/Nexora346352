@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechPro - Tienda de Computadoras</title>
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --dark: #1a0033;
+            --light: #f8f9fa;
+            --accent: #00eaff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: white;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            border: 3px solid var(--accent);
+            text-shadow: 0 0 10px rgba(0, 234, 255, 0.5);
+        }
+        
+        nav {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 15px 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .slider {
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide-content {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-left: 5px solid var(--accent);
+            max-width: 50%;
+        }
+        
+        .slide-content h2 {
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .mission-vision {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 50px 10%;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-card {
+            width: 30%;
+            background: linear-gradient(to bottom, #2b1055, #1a0033);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .info-card .icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .info-card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .info-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .section-title {
+            text-align: center;
+            padding: 40px 0 20px;
+            color: var(--accent);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        .values {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px 5%;
+        }
+        
+        .value-card {
+            width: 18%;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: scale(1.05);
+            background: rgba(106, 17, 203, 0.2);
+        }
+        
+        .value-card h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .value-card p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .products {
+            padding: 20px 5%;
+        }
+        
+        .product-category {
+            margin-bottom: 40px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 5px solid var(--accent);
+        }
+        
+        .category-icon {
+            margin-right: 15px;
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .product-card {
+            background: linear-gradient(to bottom, #2b1055, #1a0033);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .product-img {
+            height: 180px;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-img img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .product-info .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        .product-info p {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background: linear-gradient(to bottom, #2b1055, #1a0033);
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 234, 255, 0.3);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: var(--accent);
+            cursor: pointer;
+        }
+        
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .spec-table th, .spec-table td {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .spec-table th {
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--accent);
+        }
+        
+        .spec-table tr:nth-child(even) {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        footer {
+            background: #1a0033;
+            padding: 30px;
+            text-align: center;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            color: #ccc;
+        }
+        
+        @media (max-width: 768px) {
+            .info-card, .value-card {
+                width: 45%;
+            }
+            
+            .slide-content {
+                left: 20px;
+                max-width: 80%;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .info-card, .value-card {
+                width: 100%;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">TP</div>
+        <h1>TNexora</h1>
+        <p>Tecnología para profesionales</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#valores">Valores</a></li>
+            <li><a href="#productos">Productos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+    
+    <section id="inicio" class="slider">
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80')">
+            <div class="slide-content">
+                <h2>Tecnología de vanguardia</h2>
+                <p>Descubre nuestra selección de equipos de última generación para todas tus necesidades</p>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80')">
+            <div class="slide-content">
+                <h2>Equipos para gaming</h2>
+                <p>Potencia sin límites para disfrutar de tus juegos favoritos</p>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80')">
+            <div class="slide-content">
+                <h2>Soluciones empresariales</h2>
+                <p>Equipos confiables para impulsar tu negocio hacia el éxito</p>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80')">
+            <div class="slide-content">
+                <h2>Portátiles ultraligeros</h2>
+                <p>Movilidad y rendimiento en cualquier lugar</p>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80')">
+            <div class="slide-content">
+                <h2>Soporte excepcional</h2>
+                <p>Acompañamiento técnico para sacar el máximo partido a tu equipo</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="nosotros" class="mission-vision">
+        <div class="info-card">
+            <div class="icon">⟐</div>
+            <h3>Misión</h3>
+            <p>Proveer a todos nuestros clientes con las mejores soluciones tecnológicas que se ajusten perfectamente a sus necesidades, brindando siempre herramientas de calidad que impulsen su productividad y les permitan alcanzar sus metas personales y profesionales.</p>
+        </div>
+        
+        <div class="info-card">
+            <div class="icon">◎</div>
+            <h3>Visión</h3>
+            <p>Ser líderes en la innovación de la tecnología personal, transformando la forma en que las personas interactúan con el mundo digital. Aspiramos a construir un futuro donde la tecnología sea accesible, transformándola en parte integral de nuestras vidas.</p>
+        </div>
+        
+        <div class="info-card">
+            <div class="icon">◷</div>
+            <h3>Historia</h3>
+            <p>Fundada en 2010 por apasionados de la tecnología, TechPro ha crecido hasta convertirse en una referencia en el mercado. Nuestro equipo de expertos está formado por los mejores talentos del sector, que han desarrollado soluciones tecnológicas pioneras en todas las etapas de nuestra historia.</p>
+        </div>
+    </section>
+    
+    <h2 id="valores" class="section-title">Nuestros Valores</h2>
+    <section class="values">
+        <div class="value-card">
+            <h4>Innovación Constante</h4>
+            <p>Nos comprometemos a ir siempre un paso más allá, utilizando la tecnología más avanzada para desarrollar soluciones que anteceden a las necesidades del mercado.</p>
+        </div>
+        
+        <div class="value-card">
+            <h4>Calidad Premium</h4>
+            <p>Ofrecemos solo componentes de la más alta calidad, respaldados por amplias garantías que aseguran productos fiables de alto desempeño para cada necesidad.</p>
+        </div>
+        
+        <div class="value-card">
+            <h4>Personalización</h4>
+            <p>Cada usuario es único y merece configuraciones personalizadas que respondan a sus necesidades específicas para lograr una experiencia individualizada.</p>
+        </div>
+        
+        <div class="value-card">
+            <h4>Soporte Excepcional</h4>
+            <p>Brindamos soporte rápido, ágil y resolutivo en cada paso del proceso de compra y uso posterior, con especialistas dedicados a resolver todas tus dudas de configuración.</p>
+        </div>
+        
+        <div class="value-card">
+            <h4>Sostenibilidad</h4>
+            <p>Nos comprometemos a reducir nuestro impacto ambiental mediante prácticas sostenibles profesionales y responsables con la producción y energías renovables eficientes.</p>
+        </div>
+    </section>
+    
+    <h2 id="productos" class="section-title">Nuestros Productos</h2>
+    <section class="products">
+        <!-- Gama Baja -->
+        <div class="product-category">
+            <div class="category-header">
+                <div class="category-icon">💻</div>
+                <h3>Gama Baja (Económica)</h3>
+            </div>
+            <p>Características: Para tareas básicas (navegar, Word, video streaming), procesadores Intel i3, Ryzen 3 o Celeron, almacenamiento limitado, construcción más simple.</p>
+            
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Lenovo IdeaPad 1">
+                    </div>
+                    <div class="product-info">
+                        <h4>Lenovo IdeaPad 1</h4>
+                        <p>Incluye AMD Ryzen 3 / Celeron, RAM 4GB, almacenamiento SSD 128GB, pantalla 14"</p>
+                        <div class="price">$250-$400</div>
+                        <button class="btn specs-btn" data-product="ideapad1">Ver Detalles</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1593642634402-b0eb5e2eebc9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="HP Stream 14">
+                    </div>
+                    <div class="product-info">
+                        <h4>HP Stream 14</h4>
+                        <p>Incluye Intel Celeron, RAM 4GB, almacenamiento eMMC 64GB, pantalla 14"</p>
+                        <div class="price">$200-$300</div>
+                        <button class="btn specs-btn" data-product="hpstream14">Ver Detalles</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Acer Aspire 3">
+                    </div>
+                    <div class="product-info">
+                        <h4>Acer Aspire 3</h4>
+                        <p>Incluye Intel i3 / Ryzen 3, RAM 8GB, almacenamiento SSD 256GB, pantalla 15.6"</p>
+                        <div class="price">$350-$500</div>
+                        <button class="btn specs-btn" data-product="aceraspire3">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gama Media -->
+        <div class="product-category">
+            <div class="category-header">
+                <div class="category-icon">💻</div>
+                <h3>Gama Media</h3>
+            </div>
+            <p>Características: Para uso general y multitarea, procesadores Intel i5, Ryzen 5, RAM 8-16GB, SSD mayor capacidad, mejor pantalla, construcción más resistente.</p>
+            
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="MSI Sword 16 HX">
+                    </div>
+                    
+                    <div class="product-info">
+                        <h4>MSI Sword 16 HX</h4>
+                        <p>Diseño elegante para gaming casual, logra un equilibrio entre rendimiento y portabilidad</p>
+                        <div class="price">$38,499</div>
+                        <button class="btn specs-btn" data-product="msisword">Ver Detalles</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="HP Victus 15">
+                    </div>
+                    <div class="product-info">
+                        <h4>HP Victus 15</h4>
+                        <p>Con diseño robusto para tareas exigentes, combina funcionalidad y eficacia de uso intensivo</p>
+                        <div class="price">$21,539</div>
+                        <button class="btn specs-btn" data-product="hpvictus">Ver Detalles</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Huawei MateBook D16">
+                    </div>
+                    <div class="product-info">
+                        <h4>Huawei MateBook D16</h4>
+                        <p>Diseño sobrio y elegante, ideal para profesionales, ligero y resistente con gran pantalla</p>
+                        <div class="price">$24,999</div>
+                        <button class="btn specs-btn" data-product="huaweimate">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gama Alta -->
+        <div class="product-category">
+            <div class="category-header">
+                <div class="category-icon">💻</div>
+                <h3>Gama Alta (Premium)</h3>
+            </div>
+            <p>Características: Procesadores potentes (Intel i7/i9, AMD Ryzen 9, Apple M3), pantallas de alta resolución (4K, OLED, 120Hz+), diseño premium, larga duración de batería, GPU dedicada de alto rendimiento (NVIDIA RTX 4070+).</p>
+            
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Apple MacBook Pro M3 Pro">
+                    </div>
+                    <div class="product-info">
+                        <h4>Apple MacBook Pro M3 Pro</h4>
+                        <p>Rendimiento y eficiencia extraordinaria, pantalla XDR, batería de larga duración</p>
+                        <div class="price">$2,000+ USD</div>
+                        <button class="btn specs-btn" data-product="macbookpro">Ver Detalles</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Dell XPS 15">
+                    </div>
+                    <div class="product-info">
+                        <h4>Dell XPS 15 / XPS 17</h4>
+                        <p>Elegancia y potencia en un chasis premium, pantalla OLED, rendimiento excepcional</p>
+                        <div class="price">$1,800-$2,500</div>
+                        <button class="btn specs-btn" data-product="dellxps">Ver Detalles</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Dell XPS 17">
+                    </div>
+                      
+                    <div class="product-info">
+                        <h4>Asus ROG Zephyrus G14</h4>
+                        <p>Portátil gaming ultraligero, AMD Ryzen 9 + RTX 4070, refrigeración avanzada</p>
+                        <div class="price">$2,000+</div>
+                        <button class="btn specs-btn" data-product="asusrog">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Modales para las especificaciones -->
+    <div id="modalIdeapad1" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Lenovo IdeaPad 1 - Especificaciones</h2>
+            <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Lenovo IdeaPad 1" style="width:100%; max-height:300px; object-fit:cover; margin-bottom:20px;">
+            <table class="spec-table">
+                <tr>
+                    <th>Procesador</th>
+                    <td>AMD Ryzen 3 3250U / Intel Celeron N4020 (2 núcleos, hasta 3.5GHz)</td>
+                </tr>
+                <tr>
+                    <th>Memoria RAM</th>
+                    <td>4GB DDR4 (soldada, no expandible)</td>
+                </tr>
+                <tr>
+                    <th>Almacenamiento</th>
+                    <td>128GB SSD PCIe (ranura M.2 disponible para expansión)</td>
+                </tr>
+                <tr>
+                    <th>Pantalla</th>
+                    <td>14" HD (1366 x 768) TN, 220 nits, anti-reflejo</td>
+                </tr>
+                <tr>
+                    <th>Gráficos</th>
+                    <td>AMD Radeon Vega 3 / Intel UHD Graphics 600</td>
+                </tr>
+                <tr>
+                    <th>Conectividad</th>
+                    <td>Wi-Fi 5 (802.11ac), Bluetooth 4.2, 2x USB 3.2 Gen 1, HDMI 1.4b, Lector SD, Jack 3.5mm</td>
+                </tr>
+                <tr>
+                    <th>Batería</th>
+                    <td>35Wh, hasta 6 horas (video playback), carga rápida</td>
+                </tr>
+                <tr>
+                    <th>Audio</th>
+                    <td>Altavoces estéreo 2W con Dolby Audio</td>
+                </tr>
+                <tr>
+                    <th>Cámara</th>
+                    <td>HD 720p con obturador de privacidad</td>
+                </tr>
+                <tr>
+                    <th>Sistema Operativo</th>
+                    <td>Windows 11 Home en modo S (actualizable a modo completo)</td>
+                </tr>
+                <tr>
+                    <th>Dimensiones</th>
+                    <td>324 x 220 x 17.9 mm</td>
+                </tr>
+                <tr>
+                    <th>Peso</th>
+                    <td>1.4 kg</td>
+                </tr>
+                <tr>
+                    <th>Materiales</th>
+                    <td>Cubierta superior de plástico, base de policarbonato</td>
+                </tr>
+                <tr>
+                    <th>Garantía</th>
+                    <td>1 año con servicio técnico incluido</td>
+                </tr>
+                <tr>
+                    <th>Incluye</th>
+                    <td>Cargador de 45W, documentación, licencia de Office 365 (prueba de 1 mes)</td>
+                </tr>
+            </table>
+            <p style="margin-top: 20px; font-style: italic;">Ideal para tareas básicas como navegación web, ofimática básica y consumo de contenido multimedia. Perfecto para estudiantes o como equipo secundario. No recomendado para edición multimedia o gaming.</p>
+            <button class="btn" style="margin-top: 20px;">Agregar al carrito</button>
+        </div>
+    </div>
+    
+    <div id="modalHpstream14" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>HP Stream 14 - Especificaciones</h2>
+            <img src="https://images.unsplash.com/photo-1593642634402-b0eb5e2eebc9?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="HP Stream 14" style="width:100%; max-height:300px; object-fit:cover; margin-bottom:20px;">
+            <table class="spec-table">
+                <tr>
+                    <th>Procesador</th>
+                    <td>Intel Celeron N4020 (2 núcleos, 1.1GHz base, hasta 2.8GHz)</td>
+                </tr>
+                <tr>
+                    <th>Memoria RAM</th>
+                    <td>4GB LPDDR4 (soldada, no expandible)</td>
+                </tr>
+                <tr>
+                    <th>Almacenamiento</th>
+                    <td>64GB eMMC (no expandible internamente)</td>
+                </tr>
+                <tr>
+                    <th>Pantalla</th>
+                    <td>14" HD (1366 x 768) IPS, 220 nits, anti-reflejo</td>
+                </tr>
+                <tr>
+                    <th>Gráficos</th>
+                    <td>Intel UHD Graphics 600 (12 ejecuciones, hasta 650MHz)</td>
+                </tr>
+                <tr>
+                    <th>Conectividad</th>
+                    <td>Wi-Fi 5 (802.11ac), Bluetooth 4.2, 1x USB 3.1 Gen 1, 2x USB 2.0, HDMI 1.4b, Lector SD, Jack 3.5mm</td>
+                </tr>
+                <tr>
+                    <th>Batería</th>
+                    <td>41Wh, hasta 8 horas (video playback)</td>
+                </tr>
+                <tr>
+                    <th>Audio</th>
+                    <td>Altavoces estéreo con tecnología HP Audio Boost</td>
+                </tr>
+                <tr>
+                    <th>Cámara</th>
+                    <td>HD 720p con micrófono digital integrado</td>
+                </tr>
+                <tr>
+                    <th>Sistema Operativo</th>
+                    <td>Windows 11 Home en modo S (no actualizable)</td>
+                </tr>
+                <tr>
+                    <th>Dimensiones</th>
+                    <td>325 x 225 x 18 mm</td>
+                </tr>
+                <tr>
+                    <th>Peso</th>
+                    <td>1.3 kg</td>
+                </tr>
+                <tr>
+                    <th>Materiales</th>
+                    <td>Plástico en toda la estructura, bisagra reforzada</td>
+                </tr>
+                <tr>
+                    <th>Garantía</th>
+                    <td>1 año limitada</td>
+                </tr>
+                <tr>
+                    <th>Incluye</th>
+                    <td>Cargador de 45W, 1 año de Microsoft 365 Personal, 100GB OneDrive por 1 año</td>
+                </tr>
+            </table>
+            <p style="margin-top: 20px; font-style: italic;">Diseñado para tareas básicas con un enfoque en la nube. Excelente opción para estudiantes o como segundo equipo. Limitado por el almacenamiento interno y modo S de Windows.</p>
+            <button class="btn" style="margin-top: 20px;">Agregar al carrito</button>
+        </div>
+    </div>
+    
+    <div id="modalAceraspire3" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Acer Aspire 3 - Especificaciones</h2>
+            <img src="https://images.unsplash.com/photo-1618410320926-890592470a1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Acer Aspire 3" style="width:100%; max-height:300px; object-fit:cover; margin-bottom:20px;">
+            <table class="spec-table">
+                <tr>
+                    <th>Procesador</th>
+                    <td>Intel Core i3-1115G4 (2 núcleos, 4 hilos, hasta 4.1GHz) / AMD Ryzen 3 3250U (2 núcleos, 4 hilos, hasta 3.5GHz)</td>
+                </tr>
+                <tr>
+                    <th>Memoria RAM</th>
+                    <td>8GB DDR4 (1 slot ocupado, 1 disponible para expansión hasta 16GB)</td>
+                </tr>
+                <tr>
+                    <th>Almacenamiento</th>
+                    <td>256GB SSD NVMe (ranura M.2 adicional disponible)</td>
+                </tr>
+                <tr>
+                    <th>Pantalla</th>
+                    <td>15.6" Full HD (1920 x 1080) IPS, 250 nits, anti-reflejo</td>
+                </tr>
+                <tr>
+                    <th>Gráficos</th>
+                    <td>Intel Iris Xe Graphics (versión i3) / AMD Radeon Vega 3 (versión Ryzen)</td>
+                </tr>
+                <tr>
+                    <th>Conectividad</th>
+                    <td>Wi-Fi 6 (802..11ac), Bluetooth 4.2, 1x USB 3.1 Gen 1, 2x USB 2.0, HDMI 1.4b, Lector SD, Jack 3.5mm</td>
+
+                    <tr>
+                        <th>Conectividad</th>
+                        <td>Wi-Fi 6 (802.11ax), Bluetooth 5.1, 1x USB 3.2 Gen 2 Type-C, 2x USB 3.2 Gen 1, HDMI 2.0, Ethernet RJ-45, Jack 3.5mm</td>
+                    </tr>
+                    <tr>
+                        <th>Batería</th>
+                        <td>48Wh, hasta 8 horas (uso mixto)</td>
+                    </tr>
+                    <tr>
+                        <th>Audio</th>
+                        <td>Altavoces estéreo con tecnología Acer TrueHarmony</td>
+                    </tr>
+                    <tr>
+                        <th>Cámara</th>
+                        <td>HD 720p con micrófonos digitales y tecnología Acer PurifiedVoice</td>
+                    </tr>
+                    <tr>
+                        <th>Sistema Operativo</th>
+                        <td>Windows 11 Home</td>
+                    </tr>
+                    <tr>
+                        <th>Dimensiones</th>
+                        <td>363.4 x 238.4 x 19.9 mm</td>
+                    </tr>
+                    <tr>
+                        <th>Peso</th>
+                        <td>1.7 kg</td>
+                    </tr>
+                    <tr>
+                        <th>Materiales</th>
+                        <td>Chasis de plástico reforzado, bisagra metálica</td>
+                    </tr>
+                    <tr>
+                        <th>Garantía</th>
+                        <td>1 año internacional</td>
+                    </tr>
+                    <tr>
+                        <th>Incluye</th>
+                        <td>Cargador de 65W, mochila Acer, licencia de Office 365 (prueba de 1 mes)</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px; font-style: italic;">Equilibrio perfecto entre rendimiento y precio. Capaz de manejar multitarea moderada, edición básica de fotos y video streaming en alta calidad. Buena opción para estudiantes universitarios o trabajos de oficina.</p>
+                <button class="btn" style="margin-top: 20px;">Agregar al carrito</button>
+            </div>
+        </div>
+        
+        <div id="modalMsisword" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>MSI Sword 16 HX - Especificaciones</h2>
+                <img src="https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="MSI Sword 16 HX" style="width:100%; max-height:300px; object-fit:cover; margin-bottom:20px;">
+                <table class="spec-table">
+                    <tr>
+                        <th>Procesador</th>
+                        <td>Intel Core i7-13620H (10 núcleos, 16 hilos, hasta 4.9GHz)</td>
+                    </tr>
+                    <tr>
+                        <th>Memoria RAM</th>
+                        <td>16GB DDR5 (2 slots, expandible hasta 64GB)</td>
+                    </tr>
+                    <tr>
+                        <th>Almacenamiento</th>
+                        <td>1TB NVMe PCIe 4.0 SSD (2 slots M.2 disponibles)</td>
+                    </tr>
+                    <tr>
+                        <th>Pantalla</th>
+                        <td>16" Full HD (1920x1200) IPS-Level, 144Hz, 100% sRGB</td>
+                    </tr>
+                    <tr>
+                        <th>Gráficos</th>
+                        <td>NVIDIA GeForce RTX 4060 8GB GDDR6 (TGP 105W)</td>
+                    </tr>
+                    <tr>
+                        <th>Conectividad</th>
+                        <td>Wi-Fi 6E, Bluetooth 5.3, 1x Thunderbolt 4, 1x USB 3.2 Gen 2 Type-C, 2x USB 3.2 Gen 1, HDMI 2.1, Mini DisplayPort 1.4, RJ-45 2.5Gbps, Jack 3.5mm</td>
+                    </tr>
+                    <tr>
+                        <th>Batería</th>
+                        <td>53.5Wh, hasta 4 horas (uso normal)</td>
+                    </tr>
+                    <tr>
+                        <th>Refrigeración</th>
+                        <td>Sistema Cooler Boost 5 con 2 ventiladores y 6 tubos de calor</td>
+                    </tr>
+                    <tr>
+                        <th>Audio</th>
+                        <td>Altavoces estéreo 2W con tecnología Nahimic 3</td>
+                    </tr>
+                    <tr>
+                        <th>Cámara</th>
+                        <td>HD 720p con micrófono array</td>
+                    </tr>
+                    <tr>
+                        <th>Sistema Operativo</th>
+                        <td>Windows 11 Home</td>
+                    </tr>
+                    <tr>
+                        <th>Dimensiones</th>
+                        <td>359 x 259 x 24.9 mm</td>
+                    </tr>
+                    <tr>
+                        <th>Peso</th>
+                        <td>2.3 kg</td>
+                    </tr>
+                    <tr>
+                        <th>Materiales</th>
+                        <td>Chasis de plástico reforzado con detalles metálicos</td>
+                    </tr>
+                    <tr>
+                        <th>Teclado</th>
+                        <td>Teclado gaming con retroiluminación RGB por zonas, key travel 1.7mm</td>
+                    </tr>
+                    <tr>
+                        <th>Garantía</th>
+                        <td>2 años (1 año internacional)</td>
+                    </tr>
+                    <tr>
+                        <th>Incluye</th>
+                        <td>Cargador de 240W, mouse gaming MSI, mochila, software MSI Center</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px; font-style: italic;">Portátil gaming equilibrado con excelente relación calidad-precio. Capaz de manejar juegos AAA en configuraciones medias-altas y tareas creativas como edición de video. Ideal para gamers ocasionales y creadores de contenido.</p>
+                <button class="btn" style="margin-top: 20px;">Agregar al carrito</button>
+            </div>
+        </div>
+        
+        <div id="modalHpvictus" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>HP Victus 15 - Especificaciones</h2>
+                <img src="https://images.unsplash.com/photo-1618410320926-890592470a1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="HP Victus 15" style="width:100%; max-height:300px; object-fit:cover; margin-bottom:20px;">
+                <table class="spec-table">
+                    <tr>
+                        <th>Procesador</th>
+                        <td>AMD Ryzen 5 7535HS (6 núcleos, 12 hilos, hasta 4.55GHz)</td>
+                    </tr>
+                    <tr>
+                        <th>Memoria RAM</th>
+                        <td>16GB DDR5-4800MHz (2 slots, expandible hasta 32GB)</td>
+                    </tr>
+                    <tr>
+                        <th>Almacenamiento</th>
+                        <td>512GB PCIe NVMe M.2 SSD (1 slot adicional disponible)</td>
+                    </tr>
+                    <tr>
+                        <th>Pantalla</th>
+                        <td>15.6" Full HD (1920x1080) IPS, 144Hz, 250 nits, 45% NTSC</td>
+                    </tr>
+                    <tr>
+                        <th>Gráficos</th>
+                        <td>NVIDIA GeForce RTX 3050 4GB GDDR6 (TGP 75W)</td>
+                    </tr>
+                    <tr>
+                        <th>Conectividad</th>
+                        <td>Wi-Fi 6 (802.11ax), Bluetooth 5.2, 1x USB 3.2 Gen 2 Type-C, 2x USB 3.2 Gen 1, HDMI 2.1, RJ-45, Jack 3.5mm</td>
+                    </tr>
+                    <tr>
+                        <th>Batería</th>
+                        <td>52.5Wh, hasta 5 horas (uso mixto)</td>
+                    </tr>
+                    <tr>
+                        <th>Refrigeración</th>
+                        <td>Sistema de enfriamiento con doble ventilador y tubos de calor</td>
+                    </tr>
+                    <tr>
+                        <th>Audio</th>
+                        <td>Altavoces duales con tecnología Audio by B&O</td>
+                    </tr>
+                    <tr>
+                        <th>Cámara</th>
+                        <td>HD 720p con micrófono digital integrado</td>
+                    </tr>
+                    <tr>
+                        <th>Sistema Operativo</th>
+                        <td>Windows 11 Home</td>
+                    </tr>
+                    <tr>
+                        <th>Dimensiones</th>
+                        <td>357.9 x 239.7 x 23.5 mm</td>
+                    </tr>
+                    <tr>
+                        <th>Peso</th>
+                        <td>2.29 kg</td>
+                    </tr>
+                    <tr>
+                        <th>Materiales</th>
+                        <td>Plástico reforzado con acabado mate resistente a huellas</td>
+                    </tr>
+                    <tr>
+                        <th>Teclado</th>
+                        <td>Teclado full-size con retroiluminación blanca, key travel 1.5mm</td>
+                    </tr>
+                    <tr>
+                        <th>Garantía</th>
+                        <td>1 año con cobertura internacional</td>
+                    </tr>
+                    <tr>
+                        <th>Incluye</th>
+                        <td>Cargador de 150W, mouse HP, licencia de Office 365 (prueba de 1 mes)</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px; font-style: italic;">Portátil gaming de entrada con buen rendimiento para juegos en configuraciones medias. También adecuado para diseño gráfico y edición de video básica. Diseño sobrio que funciona bien en entornos profesionales.</p>
+                <button class="btn" style="margin-top: 20px;">Agregar al carrito</button>
+            </div>
+        </div>
+        
+        <div id="modalHuaweimate" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Huawei MateBook D16 - Especificaciones</h2>
+                <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Huawei MateBook D16" style="width:100%; max-height:300px; object-fit:cover; margin-bottom:20px;">
+                <table class="spec-table">
+                    <tr>
+                        <th>Procesador</th>
+                        <td>Intel Core i5-12450H (8 núcleos, 12 hilos, hasta 4.4GHz)</td>
+                    </tr>
+                    <tr>
+                        <th>Memoria RAM</th>
+                        <td>16GB LPDDR4x (soldada, no expandible)</td>
+                    </tr>
+                    <tr>
+                        <th>Almacenamiento</th>
+                        <td>512GB NVMe PCIe SSD (no expandible)</td>
+                    </tr>
+                    <tr>
+                        <th>Pantalla</th>
+                        <td>16" IPS Full HD (1920x1200), 100% sRGB, 300 nits, relación 16:10</td>
+                    </tr>
+                    <tr>
+                        <th>Gráficos</th>
+                        <td>Intel Iris Xe Graphics (80 ejecuciones, hasta 1.3GHz)</td>
+                    </tr>
+                    <tr>
+                        <th>Conectividad</th>
+                        <td>Wi-Fi 6 (802.11ax), Bluetooth 5.2, 1x USB 3.2 Gen 1 Type-C, 2x USB 3.2 Gen 1, HDMI 2.0, Jack 3.5mm</td>
+                    </tr>
+                    <tr>
+                        <th>Batería</th>
+                        <td>60Wh, hasta 12 horas (uso ofimático)</td>
+                    </tr>
+                    <tr>
+                        <th>Audio</th>
+                        <td>Altavoces estéreo con tecnología Huawei Histen</td>
+                    </tr>
+                    <tr>
+                        <th>Cámara</th>
+                        <td>HD 720p oculta en teclado (botón físico de privacidad)</td>
+                    </tr>
+                    <tr>
+                        <th>Sistema Operativo</th>
+                        <td>Windows 11 Home</td>
+                    </tr>
+                    <tr>
+                        <th>Dimensiones</th>
+                        <td>356.7 x 248.7 x 18.4 mm</td>
+                    </tr>
+                    <tr>
+                        <th>Peso</th>
+                        <td>1.7 kg</td>
+                    </tr>
+                    <tr>
+                        <th>Materiales</th>
+                        <td>Chasis de aluminio anodizado, bisagra de 180°</td>
+                    </tr>
+                    <tr>
+                        <th>Teclado</th>
+                        <td>Teclado full-size con teclado numérico, key travel 1.5mm</td>
+                    </tr>
+                    <tr>
+                        <th>Seguridad</th>
+                        <td>Sensor de huella dactilar en botón de encendido</td>
+                    </tr>
+                    <tr>
+                        <th>Garantía</th>
+                        <td>2 años</td>
+                    </tr>
+                    <tr>
+                        <th>Incluye</th>
+                        <td>Cargador USB-C de 65W, funda protectora, licencia de Office 365 (prueba de 1 mes)</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px; font-style: italic;">Portátil profesional con pantalla amplia y de alta calidad, ideal para productividad. Excelente autonomía y construcción premium. Compatibilidad limitada con algunos servicios de Google. Perfecto para profesionales que valoran diseño y pantalla sobre potencia gráfica.</p>
+                <button class="btn" style="margin-top: 20px;">Agregar al carrito</button>
+            </div>
+        </div>
+        
+        <div id="modalMacbookpro" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Apple MacBook Pro M3 Pro - Especificaciones</h2>
+                <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="MacBook Pro M3 Pro" style="width:100%; max-height:300px; object-fit:cover; margin-bottom:20px;">
+                <table class="spec-table">
+                    <tr>
+                        <th>Procesador</th>
+                        <td>Apple M3 Pro (12 núcleos CPU: 6 de rendimiento + 6 de eficiencia, 18 núcleos GPU, 16 núcleos Neural Engine)</td>
+                    </tr>
+                    <tr>
+                        <th>Memoria RAM</th>
+                        <td>18GB unificada (configurable hasta 36GB)</td>
+                    </tr>
+                    <tr>
+                        <th>Almacenamiento</th>
+                        <td>512GB SSD (configurable hasta 8TB)</td>
+                    </tr>
+                    <tr>
+                        <th>Pantalla</th>
+                        <td>14.2" Liquid Retina XDR (3024x1964), mini-LED, 120Hz ProMotion, 1000 nits brillo sostenido, 1600 nits pico</td>
+                    </tr>
+                    <tr>
+                        <th>Gráficos</th>
+                        <td>GPU integrada de 18 núcleos</td>
+                    </tr>
+                    <tr>
+                        <th>Conectividad</th>
+                        <td>Wi-Fi 6E, Bluetooth 5.3, 3x Thunderbolt 4 (USB-C), HDMI 2.1, SDXC, Jack 3.5mm, MagSafe 3</td>
+                    </tr>
+                    <tr>
+                        <th>Batería</th>
+                        <td>70Wh, hasta 18 horas (navegación web), hasta 22 horas (reproducción de video)</td>
+                    </tr>
+                    <tr>
+                        <th>Audio</th>
+                        <td>Sistema de seis altavoces con cancelación de graves, soporte para Dolby Atmos, 3 micrófonos con calidad de estudio</td>
+                    </tr>
+                    <tr>
+                        <th>Cámara</th>
+                        <td>1080p FaceTime HD con procesamiento avanzado de imagen</td>
+                    </tr>
+                    <tr>
+                        <th>Sistema Operativo</th>
+                        <td>macOS Ventura (actualizable a versiones futuras)</td>
+                    </tr>
+                    <tr>
+                        <th>Dimensiones</th>
+                        <td>312.6 x 221.2 x 15.5 mm</td>
+                    </tr>
+                    <tr>
+                        <th>Peso</th>
+                        <td>1.61 kg</td>
+                    </tr>
+                    <tr>
+                        <th>Materiales</th>
+                        <td>Chasis de aluminio unibody con acabado espacial</td>
+                    </tr>
+                    <tr>
+                        <th>Teclado</th>
+                        <td>Teclado Magic Keyboard con Touch ID, retroiluminación, tecla Escape física</td>
+                    </tr>
+                    <tr>
+                        <th>Touch Bar</th>
+                        <td>No incluida en modelos M3</td>
+                    </tr>
+                    <tr>
+                        <th>Seguridad</th>
+                        <td>Touch ID, chip de seguridad T2</td>
+                    </tr>
+                    <tr>
+                        <th>Garantía</th>
+                        <td>1 año limitada (ampliable a 3 años con AppleCare+)</td>
+                    </tr>
+                    <tr>
+                        <th>Incluye</th>
+                        <td>Cargador USB-C de 70W, cable USB-C a MagSafe 3 (color a juego)</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px; font-style: italic;">La elección definitiva para profesionales creativos. Rendimiento excepcional en edición de video 4K/8K, modelado 3D y desarrollo de software. Pantalla de referencia para trabajos de color. Autonomía líder en su categoría. Incompatible con Windows nativo (solo mediante virtualización).</p>
+                <button class="btn" style="margin-top: 20px;">Agregar al carrito</button>
+            </div>
+        </div>
+        
+        <div id="modalDellxps" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Dell XPS 15 / XPS 17 - Especificaciones</h2>
+                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Dell XPS 15" style="width:100%; max-height:300px; object-fit:cover; margin-bottom:20px;">
+                <table class="spec-table">
+                    <tr>
+                        <th>Modelo</th>
+                        <td>XPS 15 9530 / XPS 17 9730</td>
+                    </tr>
+                    <tr>
+                        <th>Procesador</th>
+                        <td>Intel Core i7-13700H (14 núcleos, 20 hilos, hasta 5.0GHz) / i9-13900H</td>
+                    </tr>
+                    <tr>
+                        <th>Memoria RAM</th>
+                        <td>32GB DDR5-4800MHz (2 slots, expandible hasta 64GB)</td>
+                    </tr>
+                    <tr>
+                        <th>Almacenamiento</th>
+                        <td>1TB NVMe PCIe 4.0 SSD (2 slots M.2 en XPS 17, 1 en XPS 15)</td>
+                    </tr>
+                    <tr>
+                        <th>Pantalla</th>
+                        <td>15.6"/17" UHD+ (3840x2400) OLED Touch, 100% DCI-P3, 400 nits / FHD+ (1920x1200) IPS, 500 nits</td>
+                    </tr>
+                    <tr>
+                        <th>Gráficos</th>
+                        <td>NVIDIA GeForce RTX 4070 8GB GDDR6 (XPS 15) / RTX 4080 12GB GDDR6 (XPS 17)</td>
+                    </tr>
+                    <tr>
+                        <th>Conectividad</th>
+                        <td>Wi-Fi 6E, Bluetooth 5.2, 2x Thunderbolt 4 (USB-C), 1x USB-C 3.2 Gen 2, SD card reader, Jack 3.5mm</td>
+                    </tr>
+                    <tr>
+                        <th>Batería</th>
+                        <td>86Wh (XPS 15) / 97Wh (XPS 17), hasta 10 horas (UHD+) / 14 horas (FHD+)</td>
+                    </tr>
+                    <tr>
+                        <th>Audio</th>
+                        <td>Sistema quad-speaker con Waves Nx 3D audio, 2 micrófonos de estudio</td>
+                    </tr>
+                    <tr>
+                        <th>Cámara</th>
+                        <td>720p con Windows Hello IR, temporizador de privacidad</td>
+                    </tr>
+                    <tr>
+                        <th>Sistema Operativo</th>
+                        <td>Windows 11 Pro</td>
+                    </tr>
+                    <tr>
+                        <th>Dimensiones</th>
+                        <td>344.4 x 230.1 x 18mm (XPS 15) / 374.4 x 248.1 x 19.5mm (XPS 17)</td>
+                    </tr>
+                    <tr>
+                        <th>Peso</th>
+                        <td>1.86kg (XPS 15) / 2.1kg (XPS 17)</td>
+                    </tr>
+                    <tr>
+                        <th>Materiales</th>
+                        <td>Chasis de aluminio CNC, interior de fibra de carbono, teclado de vidrio</td>
+                    </tr>
+                    <tr>
+                        <th>Teclado</th>
+                        <td>Teclado backlit con key travel de 1.3mm, touchpad de vidrio enorme</td>
+                    </tr>
+                    <tr>
+                        <th>Seguridad</th>
+                        <td>Windows Hello (IR cámara + huella dactilar), TPM 2.0</td>
+                    </tr>
+                    <tr>
+                        <th>Garantía</th>
+                        <td>1 año Premium Support Plus (incluye daño accidental)</td>
+                    </tr>
+                    <tr>
+                        <th>Incluye</th>
+                        <td>Cargador USB-C de 130W (XPS 15) / 240W (XPS 17), adaptador USB-C a HDMI/USB-A</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px; font-style: italic;">La referencia en portátiles premium Windows. Construcción excepcional, pantallas espectaculares y rendimiento de alto nivel. Ideal para creadores de contenido, ingenieros y profesionales exigentes. El XPS 17 es esencialmente una estación de trabajo móvil, mientras que el XPS 15 ofrece mejor portabilidad.</p>
+                <button class="btn" style="margin-top: 20px;">Agregar al carrito</button>
+            </div>
+        </div>
+        
+        <div id="modalAsusrog" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Asus ROG Zephyrus G14 - Especificaciones</h2>
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Asus ROG Zephyrus G14" style="width:100%; max-height:300px; object-fit:cover; margin-bottom:20px;">
+                <table class="spec-table">
+                    <tr>
+                        <th>Procesador</th>
+                        <td>AMD Ryzen 9 7940HS (8 núcleos, 16 hilos, hasta 5.2GHz)</td>
+                    </tr>
+                    <tr>
+                        <th>Memoria RAM</th>
+                        <td>32GB DDR5-4800MHz (soldada, no expandible)</td>
+                    </tr>
+                    <tr>
+                        <th>Almacenamiento</th>
+                        <td>1TB NVMe PCIe 4.0 SSD (2 slots M.2 disponibles)</td>
+                    </tr>
+                    <tr>
+                        <th>Pantalla</th>
+                        <td>14" QHD (2560x1600) IPS, 165Hz, 100% DCI-P3, 500 nits, Pantone Validated</td>
+                    </tr>
+                    <tr>
+                        <th>Gráficos</th>
+                        <td>NVIDIA GeForce RTX 4070 8GB GDDR6 (TGP 120W con Dynamic Boost)</td>
+                    </tr>
+                    <tr>
+                        <th>Conectividad</th>
+                        <td>Wi-Fi 6E, Bluetooth 5.3, 1x USB 4 (Type-C), 2x USB 3.2 Gen 2 Type-C, 1x USB 3.2 Gen 2 Type-A, HDMI 2.1, Jack 3.5mm</td>
+                    </tr>
+                    <tr>
+                        <th>Batería</th>
+                        <td>76Wh, hasta 10 horas (uso mixto)</td>
+                    </tr>
+                    <tr>
+                        <th>Refrigeración</th>
+                        <td>Sistema vapor chamber + 2 ventiladores Arc Flow con 84 aspas, modo silencioso</td>
+                    </tr>
+                    <tr>
+                        <th>Audio</th>
+                        <td>Altavoces quad con tecnología Dolby Atmos, Smart Amp, array micrófono con cancelación de ruido IA</td>
+                    </tr>
+                    <tr>
+                        <th>Cámara</th>
+                        <td>1080p IR con Windows Hello</td>
+                    </tr>
+                    <tr>
+                        <th>Sistema Operativo</th>
+                        <td>Windows 11 Home</td>
+                    </tr>
+                    <tr>
+                        <th>Dimensiones</th>
+                        <td>312 x 227 x 18.5-19.5 mm</td>
+                    </tr>
+                    <tr>
+                        <th>Peso</th>
+                        <td>1.72 kg</td>
+                    </tr>
+                    <tr>
+                        <th>Materiales</th>
+                        <td>Magnesio-aluminio con acabado mate, diseño AniMe Matrix opcional</td>
+                    </tr>
+                    <tr>
+                        <th>Teclado</th>
+                        <td>Teclado chiclet con retroiluminación RGB por tecla, key travel 1.7mm</td>
+                    </tr>
+                    <tr>
+                        <th>Seguridad</th>
+                        <td>Windows Hello (IR cámara), TPM 2.0</td>
+                    </tr>
+                    <tr>
+                        <th>Garantía</th>
+                        <td>2 años internacional</td>
+                    </tr>
+                    <tr>
+                        <th>Incluye</th>
+                        <td>Cargador USB-C de 240W, funda de transporte, mouse ROG Chakram Core</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 20px; font-style: italic;">El portátil gaming más equilibrado del mercado. Combina potencia extrema en un formato ultraportátil. Excelente para gaming, pero también para creación de contenido gracias a su pantalla calibrada de fábrica. Autonomía sobresaliente para un portátil gaming. Diseño profesional que no delata su naturaleza gaming.</p>
+                <button class="btn" style="margin-top: 20px;">Agregar al carrito</button>
+            </div>
+        </div>
+        
+        <footer id="contacto">
+            <h3>Nexora - Tecnología para profesionales</h3>
+            <p>Dirección: Av. Tecnológica 1234, Ciudad Digital</p>
+            <p>Teléfono: +1 234 567 890</p>
+            <p>Email: info@techpro.com</p>
+            <p>Horario: Lunes a Viernes 9:00 - 18:00</p>
+            <p>&copy; 2023 TechPro. Todos los derechos reservados.</p>
+        </footer>
+    
+        <script>
+            // Slider automático
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.slide');
+            
+            function showSlide(n) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                currentSlide = (n + slides.length) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+            
+            function nextSlide() {
+                showSlide(currentSlide + 1);
+            }
+            
+            setInterval(nextSlide, 5000);
+            
+            // Mostrar modales
+            document.querySelectorAll('.specs-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const productId = btn.getAttribute('data-product');
+                    document.getElementById(`modal${productId.charAt(0).toUpperCase() + productId.slice(1)}`).style.display = 'block';
+                });
+            });
+            
+            // Cerrar modales
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btn.closest('.modal').style.display = 'none';
+                });
+            });
+            
+            // Cerrar modal al hacer clic fuera
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
+            });
+        </script>
+    </body>
+    </html>
